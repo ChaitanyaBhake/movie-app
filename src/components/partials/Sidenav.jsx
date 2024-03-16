@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Sidenav = () => {
     return (
-        <div className="w-[20%] h-full  border-r-2 border-zinc-400 p-10 ">
+        <div className="w-[20%] h-full  border-r-2 border-zinc-400 p-10 overflow-auto ">
 
             {/*  Vertical Nav     */}
             <h1 className="text-2xl text-white font-bold">
