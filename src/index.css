@@ -15,7 +15,6 @@
 ::-webkit-scrollbar-thumb:hover{
     background: #6556cd;
     border-radius: 10px;
-    
 }
 
 select {
@@ -61,4 +60,19 @@ select::-ms-expand {
 }
 .select:hover::after {
     color: #6556cd;
+}
+
+@media (max-width:650px) {
+    .select {
+        position: relative;
+        display: flex;
+        width: 10em;
+        justify-content: center;
+        align-items: center;
+        height: 3em;
+        line-height: 3;
+        background: #27272a;
+        overflow: hidden;
+        border-radius: 0.25em;
+    }
 }

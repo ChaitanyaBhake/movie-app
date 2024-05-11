@@ -29,9 +29,8 @@ const PersonDetails = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
-
     return info ? (
-        <div className="px-[10%] w-screen h-[165vh] bg-[#1F1E24] ">
+        <div className="px-[10%] w-screen absolute bg-[#1F1E24] ">
             {/* Part-1 Navigation */}
             <nav className="h-[10vh] w-full text-zinc-100 flex gap-10 text-xl items-center">
                 <Link
@@ -41,11 +40,12 @@ const PersonDetails = () => {
             </nav>
 
             {/* Part-2 */}
-            <div className="w-full flex">
+            <div className="w-full lg:flex ">
                 {/* Left Poster and Details */}
-                <div className="w-[20%]">
+                <div className="lg:w-[20%]">
+                    {/* Image */}
                     <img
-                        className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] h-[35vh] w-full object-cover rounded-lg"
+                        className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] h-[35vh] w-[100%] object-cover rounded-lg"
                         src={`https://image.tmdb.org/t/p/original/${
                             info.detail.poster_path ||
                             info.detail.backdrop_path ||
@@ -85,6 +85,10 @@ const PersonDetails = () => {
                             <i className="hover:text-[#3caed1] ri-twitter-x-fill text-xl"></i>
                         </a>
                     </div>
+
+                    <h1 className="text-5xl text-zinc-400 font-black my-5 lg:hidden">
+                        {info.detail.name}
+                    </h1>
 
                     {/* Personal Information */}
                     <h1 className="text-2xl text-zinc-400 font-semibold my-5">
@@ -127,26 +131,30 @@ const PersonDetails = () => {
                 </div>
 
                 {/* Part-3 right details and information */}
-                <div className="w-[80%] ml-[5%]">
-                    <h1 className="text-6xl text-zinc-400 font-black my-5">
+                <div className="lg:w-[80%] lg:ml-[5%] mt-5">
+                    {/* Actor Name */}
+                    <h1 className="text-6xl text-zinc-400 font-black my-5 lg:block hidden">
                         {info.detail.name}
                     </h1>
-                    <h1 className="text-xl text-zinc-400 font-semibold ">
+
+                    <h1 className="text-2xl text-zinc-400 font-semibold ">
                         Biography
                     </h1>
                     <p className="text-zinc-400 mt-3">
                         {info.detail.biography}
                     </p>
 
-                    <h1 className="text-lg text-zinc-400 font-semibold mt-5 ">
+                    <h1 className=" text-zinc-400 font-semibold mt-5 text-2xl ">
                         Summary
                     </h1>
+
                     <HorizontalCards data={info.combinedCredits.cast} />
 
-                    <div className="w-full flex justify-between">
-                        <h1 className="text-xl text-zinc-400 font-semibold mt-5 ">
+                    <div className="w-full lg:flex-row inline-flex justify-between flex-col">
+                        <h1 className="text-2xl text-zinc-400 font-semibold mt-5 mb-5 ">
                             Acting
                         </h1>
+                        
                         <Dropdown
                             title="Category"
                             options={['tv', 'movie']}
@@ -154,7 +162,7 @@ const PersonDetails = () => {
                         />
                     </div>
 
-                    <div className="w-full h-[50vh] overflow-x-hidden overflow-y-auto shadow-lg shadow-[rgba(101,86,205,.3)] mt-5 border-2 border-zinc-700 p-5 list-disc text-zinc-400">
+                    <div className=" w-full h-[50vh] overflow-x-hidden overflow-y-auto shadow-lg shadow-[rgba(101,86,205,.3)] mt-5 mb-5 border-2 border-zinc-700 p-5 list-disc text-zinc-400">
                         {info[category + 'Credits'].cast.map((cast, i) => (
                             <li
                                 key={i}

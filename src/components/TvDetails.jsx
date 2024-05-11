@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import Loading from './partials/Loading';
 import HorizontalCards from './partials/HorizontalCards';
-import noImage from '/noImage.jpg'
+import noImage from '/noImage.jpg';
 
 const TvDetails = () => {
     const dispatch = useDispatch();
@@ -27,11 +27,10 @@ const TvDetails = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
- 
-
     return info ? (
         <div
             style={{
+                position: 'absolute',
                 background: `linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.5),rgba(0,0,0,.8)),url(https://image.tmdb.org/t/p/original/${
                     info.detail.backdrop_path || info.detail.poster_path
                 })`,
@@ -39,7 +38,7 @@ const TvDetails = () => {
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
             }}
-            className="relative w-screen h-[200vh] px-[10%]"
+            className="relative w-screen  lg:px-[10%] px-[5%]"
         >
             {/* //Part-1 Navigation */}
             <nav className="h-[10vh] w-full text-zinc-100 flex gap-10 text-xl items-center">
@@ -61,13 +60,14 @@ const TvDetails = () => {
                 <a
                     target="_blank"
                     href={`https://www.imdb.com/title/${info.externalid.imdb_id}`}
+                    className='lg:w-12 lg:h-12 w-10 h-10'
                 >
                     <img src="/imdb.png" alt="" />
                 </a>
             </nav>
 
             {/* //Part-2 Poster and Details */}
-            <div className="w-full flex">
+            <div className="w-full lg:flex-row inline-flex flex-col items-center">
                 <img
                     className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] h-[50vh] object-cover rounded-lg"
                     src={`https://image.tmdb.org/t/p/original/${
@@ -78,35 +78,39 @@ const TvDetails = () => {
                     alt=""
                 />
 
-                <div className="content ml-[5%] text-white">
+                <div className="content lg:ml-[5%] text-white mt-2">
                     {/* Title */}
-                    <h1 className="text-5xl font-black text-white  ">
+                    <h1 className="lg:text-5xl text-3xl  font-black text-white mt-4 ">
                         {info.detail.name ||
                             info.detail.title ||
                             info.detail.orignal_name ||
                             info.detail.orignal_title}
 
-                        <small className="text-2xl font-bold text-zinc-200">
+                        <small className="lg:text-2xl text-xl ml-2 font-bold text-zinc-200">
                             ({info.detail.first_air_date.split('-')[0]})
                         </small>
                     </h1>
 
                     {/* Rating  ,Release Date, Genre , Duration */}
-                    <div className="flex text-white items-center gap-x-3 mt-3 mb-5">
-                        <span className="review  text-xl font-semibold text-white bg-yellow-600 w-[5vh] h-[5vh] flex justify-center items-center rounded-full ">
+                    <div className=" flex text-white items-center gap-x-5 mt-3 mb-5">
+                        <span className="review  text-xl font-semibold text-white bg-yellow-600 lg:w-[5vh] lg:h-[5vh] flex justify-center items-center rounded-full px-1 py-2 ">
                             {(info.detail.vote_average * 10).toFixed()}{' '}
                             <sup>%</sup>
                         </span>
-                        <h1 className="w-[60px] font-semibold text-2xl leading-6">
+
+                        <h1 className="w-[60px] font-semibold lg:text-2xl text-xl leading-6">
                             User Score
                         </h1>
+
+                        {/* Date */}
                         <h1 className="">{info.detail.first_air_date}</h1>
+
+                        {/* Genres     */}
                         <h1>
                             {info.detail.genres
                                 .map((g, i) => g.name)
                                 .join(', ')}
                         </h1>
-                       
                     </div>
 
                     {/* Tagline */}
@@ -123,7 +127,7 @@ const TvDetails = () => {
                     <p className="mb-10">{info.translations.join(', ')}</p>
 
                     <Link
-                        className="  p-5 bg-[#6556CD] rounded-lg"
+                        className="  lg:p-5 bg-[#6556CD] rounded-lg px-1.5 py-2 "
                         to={`${pathname}/trailer`}
                     >
                         <i className="text-xl mr-3 ri-play-fill"></i>
@@ -182,7 +186,11 @@ const TvDetails = () => {
 
             {/* Part-4 Seasons*/}
             <hr className="mt-10 mb-5 border-none h-[2px] bg-zinc-500" />
-            <h1 className=" text-3xl font-bold text-white">Seasons</h1>
+            <h1 className=" lg:text-3xl text-2xl font-bold text-white">
+                Seasons
+            </h1>
+
+            {/*Part-5 Seasons Cards */}
             <div className="w-[100%] flex  overflow-y-hidden mb-5 p-5">
                 {info.detail.seasons.length > 0 ? (
                     info.detail.seasons.map((season, index) => (
@@ -206,18 +214,21 @@ const TvDetails = () => {
                                 alt=""
                             />
 
-                            <h1 className="text-2xl text-zinc-300 mt-3 font-semibold">
+                            <h1 className="lg:text-2xl text-xl text-zinc-300 mt-3 font-semibold">
                                 {season.name ||
                                     season.title ||
                                     season.orignal_name ||
                                     season.orignal_title}
                             </h1>
+
+                            {/* Season Air Date */}
                             <h1 className=" font-semibold text-zinc-400 p-1">
-                                ({season.air_date || "Not Available"})
+                                ({season.air_date || 'Not Available'})
                             </h1>
 
+                            {/* Season Episodes Count       */}
                             {season.episode_count && (
-                                <h1 className="text-2xl text-zinc-300  font-semibold">
+                                <h1 className="lg:text-xl text-[1rem] text-zinc-300  font-semibold">
                                     Episode Count : {season.episode_count}
                                 </h1>
                             )}
@@ -230,11 +241,12 @@ const TvDetails = () => {
                 )}
             </div>
 
-            {/* Part-5 Recommendations and similar movies*/}
+            {/* Part-6 Recommendations and similar movies*/}
             <hr className="mt-10 mb-5 border-none h-[2px] bg-zinc-500" />
-            <h1 className=" text-3xl font-bold text-white">
+            <h1 className=" lg:text-3xl text-xl font-bold text-white">
                 Recommendations and Similar
             </h1>
+            
             <HorizontalCards
                 data={
                     info.recommendation.length > 0
