@@ -23,9 +23,7 @@ const Movies = () => {
     const getMovie = async () => {
         try {
             //calling the Api
-            const { data } = await axios.get(
-                `/movie/${category}?page=${page}`
-            );
+            const { data } = await axios.get(`/movie/${category}?page=${page}`);
 
             //saving the new data from api to previous state
             if (data.results.length > 0) {
@@ -59,24 +57,33 @@ const Movies = () => {
     return movie.length > 0 ? (
         <div className=" w-screen h-screen ">
             <div className="px-[5%] w-full  flex items-center justify-between">
-                <h1 className="w-[20%] text-2xl font-semibold text-zinc-400">
+                <h1 className=" w-[20%] text-2xl font-semibold text-zinc-400">
                     <i
                         onClick={() => navigate(-1)}
                         className="hover:text-[#6556CD] ri-arrow-left-line"
                     ></i>{' '}
-                    Movie <small className='text-sm text-zinc-500'>({category})</small>
+                    <span className="lg:text-2xl text-xl">Movie</span>{' '}
+                    <small className="text-sm text-zinc-500 ">
+                        ({category})
+                    </small>
                 </h1>
 
-                <div className="flex items-center w-[80%]">
+                <div className="lg:flex-row inline-flex flex-col  items-center w-[80%]">
                     <Topnav />
 
-                    <Dropdown
-                        title="Category"
-                        options={['popular','top_rated','upcoming','now_playing']}
-                        func={(e) => setCategory(e.target.value)}
-                    />
-
-                    <div className="w-[2%]"></div>
+                    <div className="">
+                        {' '}
+                        <Dropdown
+                            title="Category"
+                            options={[
+                                'popular',
+                                'top_rated',
+                                'upcoming',
+                                'now_playing',
+                            ]}
+                            func={(e) => setCategory(e.target.value)}
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -86,7 +93,7 @@ const Movies = () => {
                 hasMore={hasMore}
                 loader={<h1>Loading..</h1>}
             >
-                <Cards data={movie} title= 'movie' />
+                <Cards data={movie} title="movie" />
             </InfiniteScroll>
         </div>
     ) : (

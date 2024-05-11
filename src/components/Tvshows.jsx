@@ -68,19 +68,21 @@ const Tvshows = () => {
                     </small>
                 </h1>
 
-                <div className="flex items-center w-[80%]">
+                <div className="lg:flex-row inline-flex flex-col  items-center w-[80%]">
                     <Topnav />
 
-                    <Dropdown
-                        title="Category"
-                        options={[
-                          'on_the_air',
-                          'popular',
-                          'top_rated',
-                          'airing_today',
-                        ]}
-                        func={(e) => setCategory(e.target.value)}
-                    />
+                    <div className='mt-10'>
+                        <Dropdown
+                            title="Category"
+                            options={[
+                                'on_the_air',
+                                'popular',
+                                'top_rated',
+                                'airing_today',
+                            ]}
+                            func={(e) => setCategory(e.target.value)}
+                        />
+                    </div>
 
                     <div className="w-[2%]"></div>
                 </div>
@@ -92,7 +94,7 @@ const Tvshows = () => {
                 hasMore={hasMore}
                 loader={<h1>Loading..</h1>}
             >
-                <Cards data={tv} title='tv' />
+                <Cards data={tv} title="tv" />
             </InfiniteScroll>
         </div>
     ) : (

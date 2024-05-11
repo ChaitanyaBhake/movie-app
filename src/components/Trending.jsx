@@ -63,10 +63,14 @@ const Trending = () => {
                         onClick={() => navigate(-1)}
                         className="hover:text-[#6556CD] ri-arrow-left-line"
                     ></i>{' '}
-                    Trending
+                    <span className='lg:text-2xl text-xl'>Trending</span>
+                   
+                    <small className="text-sm text-zinc-500 block lg:ml-10 md:ml-8">
+                        ({category} / {duration})
+                    </small>
                 </h1>
 
-                <div className="flex items-center w-[80%]">
+                <div className="lg:flex-row inline-flex flex-col items-center w-[80%]">
                     
                     <Topnav />
 
@@ -76,7 +80,7 @@ const Trending = () => {
                         func={(e) => setCategory(e.target.value)}
                     />
 
-                    <div className="w-[2%]"></div>
+                    <div className="w-[2%] mt-1.5"></div>
 
                     <Dropdown
                         title="Duration"
