@@ -35,44 +35,54 @@ const MovieDetails = () => {
     return info ? (
         <div
             style={{
+                position: "absolute",
+                top:0,
+                left:0,
                 background: `linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.5),rgba(0,0,0,.8)),url(https://image.tmdb.org/t/p/original/${
                     info.detail.backdrop_path || info.detail.poster_path
                 })`,
                 backgroundPosition: 'top 20%',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
+                
             }}
-            className="relative w-screen h-[160vh] px-[10%]"
+            className="relative w-screen  lg:px-[10%] px-[5%]"
         >
             {/* //Part-1 Navigation */}
             <nav className="h-[10vh] w-full text-zinc-100 flex gap-10 text-xl items-center">
+                {/* BackArrow */}
                 <Link
                     onClick={() => navigate(-1)}
                     className="hover:text-[#6556CD] ri-arrow-left-line"
                 ></Link>
 
+                {/* Movie Official Page */}
                 <a target="_blank" href={info.detail.homepage}>
                     <i className="hover:text-[#56cd5c] ri-external-link-fill"></i>
                 </a>
 
+                {/* WikiPedia */}
                 <a
                     target="_blank"
                     href={`https://www.wikidata.org/wiki/${info.externalid.wikidata_id}`}
                 >
                     <i className="hover:text-[#3caed1] ri-earth-fill"></i>
                 </a>
+
+                {/* IMDB rating */}
                 <a
                     target="_blank"
                     href={`https://www.imdb.com/title/${info.externalid.imdb_id}`}
+                    className='lg:w-12 lg:h-12 w-10 h-10'
                 >
                     <img src="/imdb.png" alt="" />
                 </a>
             </nav>
 
             {/* //Part-2 Poster and Details */}
-            <div className="w-full flex">
+            <div className="w-full lg:flex-row inline-flex flex-col items-center ">
                 <img
-                    className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] h-[50vh] object-cover rounded-lg"
+                    className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] h-[50vh] object-cover rounded-lg "
                     src={`https://image.tmdb.org/t/p/original/${
                         info.detail.poster_path ||
                         info.detail.backdrop_path ||
@@ -81,9 +91,9 @@ const MovieDetails = () => {
                     alt=""
                 />
 
-                <div className="content ml-[5%] text-white">
+                <div className="content lg:ml-[5%] text-white mt-2">
                     {/* Title */}
-                    <h1 className="text-5xl font-black text-white  ">
+                    <h1 className="lg:text-5xl text-3xl font-black text-white mt-4  ">
                         {info.detail.name ||
                             info.detail.title ||
                             info.detail.orignal_name ||
@@ -95,26 +105,36 @@ const MovieDetails = () => {
                     </h1>
 
                     {/* Rating  ,Release Date, Genre , Duration */}
-                    <div className="flex text-white items-center gap-x-3 mt-3 mb-5">
-                        <span className="review  text-xl font-semibold text-white bg-yellow-600 w-[5vh] h-[5vh] flex justify-center items-center rounded-full ">
+                    <div className="flex text-white items-center gap-x-4 mt-3 mb-5">
+                        <span className="review  text-xl font-semibold text-white bg-yellow-600 lg:w-[5vh] lg:h-[5vh] flex justify-center items-center rounded-full px-1 py-2  ">
                             {(info.detail.vote_average * 10).toFixed()}{' '}
                             <sup>%</sup>
                         </span>
-                        <h1 className="w-[60px] font-semibold text-2xl leading-6">
+
+
+                        <h1 className="w-[60px] font-semibold lg:text-2xl text-xl leading-6">
                             User Score
                         </h1>
-                        <h1 className="">{info.detail.release_date}</h1>
+
+                        {/* Date */}
+                        <h1 className=" ">{info.detail.release_date}</h1>
+
+                        {/* Genres     */}
                         <h1>
                             {info.detail.genres
                                 .map((g, i) => g.name)
                                 .join(', ')}
                         </h1>
+
+                        {/* Runtime */}
                         <h1>
-                            {info.detail.runtime ? [
-                                convertMinutesToHoursAndMinutes(
-                                    info.detail.runtime
-                                ),
-                            ]:"Not Available"}
+                            {info.detail.runtime
+                                ? [
+                                      convertMinutesToHoursAndMinutes(
+                                          info.detail.runtime
+                                      ),
+                                  ]
+                                : 'Not Available'}
                         </h1>
                     </div>
 
@@ -132,7 +152,7 @@ const MovieDetails = () => {
                     <p className="mb-10">{info.translations.join(', ')}</p>
 
                     <Link
-                        className="  p-5 bg-[#6556CD] rounded-lg"
+                        className="  lg:p-5 bg-[#6556CD] rounded-lg px-1.5 py-2"
                         to={`${pathname}/trailer`}
                     >
                         <i className="text-xl mr-3 ri-play-fill"></i>
@@ -142,7 +162,7 @@ const MovieDetails = () => {
             </div>
 
             {/* Part-3 Platforms available  */}
-            <div className="w-[80%} flex flex-col gap-y-5 mt-10">
+            <div className="w-[80%} flex flex-col gap-y-5 mt-10 overflow-auto">
                 {info.watchprovider && info.watchprovider.flatrate && (
                     <div className="flex gap-x-10 items-center text-white">
                         <h1>Available on Platforms</h1>
@@ -156,11 +176,12 @@ const MovieDetails = () => {
                             />
                         ))}
                     </div>
+                    
                 )}
 
                 {info.watchprovider && info.watchprovider.rent && (
                     <div className="flex gap-x-10 items-center text-white">
-                        <h1>Available on Rent</h1>
+                        <h3 >Available on Rent</h3>
                         {info.watchprovider.rent.map((w, i) => (
                             <img
                                 title={w.provider_name}
@@ -191,7 +212,7 @@ const MovieDetails = () => {
 
             {/* Part-4 Recommendations and similar movies*/}
             <hr className="mt-10 mb-5 border-none h-[2px] bg-zinc-500" />
-            <h1 className=" text-3xl font-bold text-white">
+            <h1 className=" lg:text-3xl text-xl font-bold text-white">
                 Recommendations and Similar
             </h1>
             <HorizontalCards

@@ -22,7 +22,9 @@ const People = () => {
     const getPerson = async () => {
         try {
             //calling the Api
-            const { data } = await axios.get(`/person/${category}?page=${page}`);
+            const { data } = await axios.get(
+                `/person/${category}?page=${page}`
+            );
 
             //saving the new data from api to previous state
             if (data.results.length > 0) {
@@ -61,13 +63,11 @@ const People = () => {
                         onClick={() => navigate(-1)}
                         className="hover:text-[#6556CD] ri-arrow-left-line"
                     ></i>{' '}
-                    People
+                    <span className='lg:text-2xl  top-14 left-5 text-sm  '>People</span>
                 </h1>
 
                 <div className="flex items-center w-[80%]">
                     <Topnav />
-
-                   
 
                     <div className="w-[2%]"></div>
                 </div>
@@ -79,7 +79,7 @@ const People = () => {
                 hasMore={hasMore}
                 loader={<h1>Loading..</h1>}
             >
-                <Cards data={person} title='person' />
+                <Cards data={person} title="person" />
             </InfiniteScroll>
         </div>
     ) : (
